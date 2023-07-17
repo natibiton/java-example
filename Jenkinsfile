@@ -4,12 +4,16 @@ pipeline {
       // Only keep the 10 most recent builds
       buildDiscarder(logRotator(numToKeepStr:'10'))
     }
+
+    tools{
+        maven 'M3'
+    }
   
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-                sh 'mvn -B -DskipTests clean package'
+                echo 'Run Maven on a Unix agent'
+                sh "mvn clean package -DskipTests=True"
             }
         }
         stage('Test') {
@@ -23,6 +27,12 @@ pipeline {
                 echo 'Deploying....'
                 sh 'mvn install'
             }
+        }
+    }
+    
+    post{
+        success{
+            echo "SUCCESSFUL: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}] "
         }
     }
 }
