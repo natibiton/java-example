@@ -6,16 +6,12 @@ import org.junit.jupiter.api.*;
 import java.time.Duration;
 
 public class ShopTest {
-    private Shop shop;
-
-    @BeforeEach
-    public void initTestObject(){
-        shop = new Shop("Apple", 100);
-    }
 
     @Test
     @DisplayName("Test the constructor values")
     public void testConstructor(){
+        Shop shop = new Shop("Apple", 100);
+        Assertions.assertNotNull(shop);
         Assertions.assertEquals(shop.getName(), "Apple");
         Assertions.assertEquals(shop.getProfit(), 0);
     }
@@ -23,7 +19,7 @@ public class ShopTest {
     @Test
     @DisplayName("Check the inventory out of stock exception")
     public void checkInventoryException(){
-        shop = new Shop("Apple", 1);
+        Shop shop = new Shop("Apple", 1);
         Employee emp = new Employee(123, "Tester", new Shop("Apple", 100));
         Assumptions.assumeTrue(shop != null, "It seems that the shop object is not initialized"); //If not true, will abort this test
         Assertions.assertDoesNotThrow(() -> shop.updateInventory(emp));
