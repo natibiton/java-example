@@ -21,4 +21,22 @@ public class NumericHelper {
         return Boolean.TRUE;
     }
 
+    //Using the "Two-Pointers technique", from the left and the right index - Assuming the array is sorted
+    public boolean isSumExists(int [] numArray, int sum){
+        int leftIndex = 0, rightIndex = numArray.length - 1;
+        while (leftIndex < rightIndex){
+            if(numArray[leftIndex] + numArray[rightIndex] == sum){
+                return true;
+            }
+            else if(numArray[leftIndex] + numArray[rightIndex] > sum){
+                rightIndex--;
+            }
+            else{
+                leftIndex++;
+            }
+        }
+
+        return false;
+    }
+
 }
